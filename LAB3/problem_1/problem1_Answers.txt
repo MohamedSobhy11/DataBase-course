@@ -1,0 +1,29 @@
+1 ) INSERT INTO department (Dnumber, Dname,mgr_ssn,mgr_start_date)VALUES ('4', 'electricity','3','11/4');
+DELETE FROM employee WHERE ssn='3';
+
+ERROR:
+
+DELETE FROM employee WHERE ssn='3';
+
+MySQL said: Documentation
+
+#1451 - Cannot delete or update a parent row:
+a foreign key constraint fails (`problem_1`.`department`, CONSTRAINT `department_ibfk_1` FOREIGN KEY (`mgr_ssn`) REFERENCES `employee` (`ssn`))
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2 ) INSERT INTO project (Pnumber,Pname,Plocation,Dno) VALUES (500, 'mall', 'cairo', 5);
+
+ERROR:
+
+INSERT INTO project (Pnumber,Pname,Plocation,Dno) VALUES (500, 'mall', 'cairo', 5);
+
+MySQL said: Documentation
+
+#1452 - Cannot add or update a child row:
+a foreign key constraint fails (`problem_1`.`project`, CONSTRAINT `project_ibfk_1` FOREIGN KEY (`Dno`) REFERENCES `department` (`Dnumber`))
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+3 ) we will not add forign keys at first , then we will add the first record in Derpartment with a 'x' as mgr_ssn
+then we will add the first record in Employee with this "x" as the ssn and the Dnumber you enterd in Derpartment as the DNO, then we will add all the forign keys. 

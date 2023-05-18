@@ -1,0 +1,88 @@
+1) 
+SELECT DISTINCT s.student_name
+FROM 
+student as s JOIN enrolled as e 
+ON s.student_id = e.student_id
+JOIN semester_course as sc 
+ON e.course_code=sc.course_code
+WHERE s.level = 'SR' AND sc.prof_id=1;
+
+2)
+SELECT DISTINCT MAX(s.age) FROM student as s 
+JOIN enrolled USING(student_id)
+JOIN semester_course USING(course_code)
+JOIN professor as p USING(prof_id)
+WHERE s.major='History' OR p.prof_name='Michael Miller' ;
+
+3)
+SELECT DISTINCT  s.student_name ,c.name 
+FROM 
+student as s left JOIN enrolled as e USING(student_id)
+left JOIN course as c USING (course_code);
+
+4)
+SELECT  p.prof_name 
+FROM professor as p
+left JOIN semester_course as sc USING(prof_id) 
+left JOIN enrolled as e USING (course_code,quarter,year)
+GROUP BY(p.prof_id)
+HAVING  COUNT(*)<5
+
+5)
+SELECT s.student_name FROM student as s
+WHERE NOT EXISTS 
+((SELECT sc.course_code ,sc.quarter,sc.year FROM semester_course as sc 
+ WHERE sc.prof_id=2 )
+Except
+(SELECT e.course_code,e.quarter,e.year FROM enrolled as e
+ WHERE e.student_id = s.student_id )) 
+
+
+
+6)
+SELECT c.name from course as c
+LEFT JOIN semester_course as sc USING (course_code) WHERE sc.prof_id IS null 
+UNION
+SELECT c.name FROM course as c 
+JOIN semester_course as sc USING(course_code)
+JOIN professor as p USING(prof_id)
+JOIN department as d USING(dept_id)
+WHERE d.dept_name = 'Computer Science'
+
+
+7)
+(SELECT s.student_name FROM student as s WHERE s.student_name LIKE 'M%' AND s.age <20)
+UNION 
+(SELECT p.prof_name  FROM professor as p 
+JOIN semester_course as sc USING(prof_id) 
+WHERE p.prof_name LIKE 'M%' 
+GROUP BY (p.prof_name)
+HAVING COUNT(*)>2)
+
+
+8)
+(SELECT p.prof_name,p.prof_id FROM professor as p 
+left JOIN semester_course as sc USING (prof_id)
+WHERE p.dept_id in (1,2,3,4)
+GROUP by(p.prof_name)
+HAVING COUT(*) <2 )
+
+
+9)
+(SELECT  s.student_name ,p.prof_name FROM student as s left JOIN enrolled as e USING (student_id)left JOIN semester_course as sc USING(course_code,quarter,year)
+LEFT join professor as p using(prof_id))
+UNION
+(SELECT  s.student_name ,p.prof_name FROM student as s left JOIN enrolled as e USING (student_id)RIGHT JOIN semester_course as sc USING(course_code,quarter,year)
+right join professor as p on (sc.prof_id = p.prof_id));
+
+
+
+
+10)
+SELECT  c.name,c.course_code,p.prof_id,p.prof_name
+FROM course as c JOIN semester_course as sc USING(course_code)
+JOIN professor as p USING (prof_id) 
+GROUP BY c.name , p.prof_id
+HAVING COUNT(c.course_code) >=2;
+
+

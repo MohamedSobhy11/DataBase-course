@@ -1,0 +1,74 @@
+CREATE DATABASE lab5;
+
+CREATE TABLE department(
+    dept_id int(11) NOT null,
+    dept_name varchar(255) not null,
+    PRIMARY KEY(dept_id)
+    );
+
+CREATE TABLE student(
+    student_id int(11) NOT null,
+    student_name varchar(255) not null,
+    major varchar(255) not null,
+    Level varchar(255) not null,
+    age int(11) not null,
+    PRIMARY KEY(student_id)
+    );
+
+CREATE TABLE professor(
+    prof_id int(11) NOT null,
+    prof_name varchar(255) not null,
+    dept_id int(255) not null,
+    PRIMARY KEY(prof_id)
+    );
+
+CREATE TABLE course(
+    course_code varchar(255) NOT null,
+    name varchar(255) not null,
+    PRIMARY KEY(course_code)
+    );
+
+
+CREATE TABLE semester_course(
+    course_code varchar(255) NOT null,
+    quarter varchar(255) not null,
+    year int(11) not null,
+    prof_id int(11) not null,
+    PRIMARY KEY(course_code,quarter,year)
+    );
+
+
+CREATE TABLE enrolled(
+    student_id int(11) not null,
+    course_code varchar(255) NOT null,
+    quarter varchar(255) not null,
+    year int(11) not null,
+    enrolled_at date not null,
+    PRIMARY KEY(student_id,course_code,quarter,year)
+    );
+
+
+ALTER TABLE professor ADD FOREIGN KEY (dept_id)
+REFERENCES department(dept_id);
+
+ALTER TABLE enrolled ADD FOREIGN KEY (student_id)
+REFERENCES student(student_id);
+
+ALTER TABLE enrolled ADD FOREIGN KEY (course_code)
+REFERENCES course(course_code);
+
+ALTER TABLE semester_course ADD FOREIGN KEY (course_code)
+REFERENCES course(course_code);
+
+ALTER TABLE enrolled ADD FOREIGN KEY (course_code,quarter,year)
+REFERENCES semester_course(course_code,quarter,year);
+
+
+
+
+
+
+
+
+
+

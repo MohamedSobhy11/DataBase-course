@@ -1,0 +1,38 @@
+1- SELECT customer_name From customer WHERE customer_name LIKE "Ma%"
+
+2- SELECT
+order_item.order_id as order_id ,
+COUNT(order_item.order_id) as nums_of_orders,
+SUM(order_item.quantity) as quantity,
+SUM(order_item.quantity*item.unit_price) as total_price
+FROM order_item JOIN item
+ON order_item.item_id =item.item_id 
+GROUP BY (order_id)
+
+
+3- SELECT shipment.order_id
+FROM shipment JOIN warehouse
+ON shipment.warehouse_id = warehouse.warehouse_id 
+WHERE warehouse.warehouse_city ='Arica'
+
+
+4- SELECT
+SUM(order_item.quantity*item.unit_price) as total_price
+FROM order_item JOIN item ON order_item.item_id = item.item_id
+JOIN shipment ON order_item.order_id = shipment.order_id
+WHERE shipment.warehouse_id=8
+
+
+5- SELECT w.warehouse_id,w.warehouse_city, COUNT(s.warehouse_id)
+FROM warehouse as w left JOIN shipment as s 
+ON w.warehouse_id=s.warehouse_id 
+GROUP BY (w.warehouse_id)
+
+6- SELECT c.customer_name , COUNT(orders.order_id)
+FROM customer as c LEFT JOIN orders
+ON c.customer_id = orders.customer_id
+GROUP BY (c.customer_name)
+
+7- SELECT item.item_id,item.unit_price
+FROM item LEFT JOIN order_item ON item.item_id = order_item.item_id
+WHERE order_item.item_id IS NULL

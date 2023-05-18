@@ -1,0 +1,35 @@
+*{
+    margin: 0;
+    box-sizing: border-box
+}
+.home .register .title{
+
+color: aliceblue;
+
+}
+.home{
+   background-image: url(../img/E11Sw2UVIAQfeB7.jfif);
+   background-size: cover;
+    background-position: center center;
+    height: 100vh;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+  
+ 
+}
+.home .register{
+
+ padding: 40px;   
+background-color: rgba(16, 16, 115, 0.6);
+border-radius: 30%;
+text-align: center;
+}
+.home .register button{
+    margin-top: 20px;
+    padding: 5px;
+    background-color:rgb(231, 231, 231) ;
+}
+.home .register label{
+    color: aliceblue;
+}
